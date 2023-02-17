@@ -1,4 +1,4 @@
-/////////0-1 KNAPSACK
+/////////////////0-1 KNAPSACK
 int knapSack(int w, int wt[], int val[], int n) 
     { 
        int t[n+1][w+1];
@@ -19,9 +19,9 @@ int knapSack(int w, int wt[], int val[], int n)
     }
 
 
-//////SUBSET SUM
-bool isSubsetSum(vector<int>arr, int m){
-        int n=arr.size();
+///////////////SUBSET SUM
+bool isSubsetSum(int arr[], int m,int n){
+        //int n=arr.size();
         bool t[n+1][m+1];
         //table
         for(int i=0;i<n+1;i++){
@@ -31,7 +31,7 @@ bool isSubsetSum(vector<int>arr, int m){
             }
         }
         for(int i=1;i<n+1;i++){
-            for(int j=1 ; j<m+1 ;j++ ){
+            for(int j=1 ; j<m+1 ; j++ ){
                 if(arr[i-1]<=j){
                     t[i][j]= ( t[i-1][j-arr[i-1]] ) || (t[i-1][j] );
                     //return max of uthaya and non uthaya
@@ -44,4 +44,19 @@ bool isSubsetSum(vector<int>arr, int m){
             }
         }
           return t[n][m];
+          }
+          
+///////////////EQUAL SUM PARTITION          
+    int equalPartition(int n, int arr[])
+    {
+        int sum=0;
+        for(int i=0;i<n;i++) sum+=arr[i];
+        if(sum%2==1)//odd
+        return 0;
+        else//even
+        {
+        bool k= isSubsetSum(arr, sum/2 ,n);
+        if(k==true) return 1;
+        else return 0;   
+        }
     }
