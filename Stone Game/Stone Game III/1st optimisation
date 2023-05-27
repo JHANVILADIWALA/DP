@@ -1,5 +1,7 @@
 https://leetcode.com/problems/stone-game-iii/submissions/
 
+//top down DP 
+
 public:
     int dp[50001];
     int help(vector<int>&s, int i){
