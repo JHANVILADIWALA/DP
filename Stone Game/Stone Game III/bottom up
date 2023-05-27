@@ -1,0 +1,25 @@
+class Solution {
+public:
+    //bottom up DP
+    string stoneGameIII(vector<int>& s) {
+
+        int n=s.size();
+       int i1=0,i2=0,i3=0; //const extra space
+        int i=n-1;
+        while(i>=0){
+            int ans=INT_MIN;
+            ans=max(ans,s[i]-i1); //adding 1 elem
+            if(i+1<s.size())ans=max(ans,s[i]+s[i+1]-i2);
+            if(i+2<s.size())ans=max(ans,s[i]+s[i+1]+s[i+2]-i3);
+             
+             i3=i2;
+             i2=i1;
+             i1=ans;
+             i--;
+        }
+        int alice=i1;
+        if(alice>0)return "Alice";
+        if(alice==0)return "Tie";
+        return "Bob";
+    }
+};
