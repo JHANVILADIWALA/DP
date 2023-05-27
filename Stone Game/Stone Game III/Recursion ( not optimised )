@@ -1,0 +1,19 @@
+https://leetcode.com/problems/stone-game-iii/submissions/958012781/
+
+public:
+    int help(vector<int>&s, int i){
+        if(i>=s.size())return 0;
+        else{
+            int ans=INT_MIN;
+            ans=max(ans,s[i]-help(s,i+1)); //adding 1 elem
+            if(i+1<s.size())ans=max(ans,s[i]+s[i+1]-help(s,i+2));
+            if(i+2<s.size())ans=max(ans,s[i]+s[i+1]+s[i+2]-help(s,i+3));
+            return ans;
+        }
+    }
+    string stoneGameIII(vector<int>& s) {
+        int alice=help(s,0);
+        if(alice>0)return "Alice";
+        if(alice==0)return "Tie";
+        return "Bob";
+    }
