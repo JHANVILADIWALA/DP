@@ -1,4 +1,6 @@
 /////////////////0-1 KNAPSACK
+https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1
+
 int knapSack(int w, int wt[], int val[], int n) 
     { 
        int t[n+1][w+1];
