@@ -1,0 +1,51 @@
+https://practice.geeksforgeeks.org/problems/perfect-sum-problem5633/1
+
+int perfectSum(int arr[], int n, int sum)
+	{
+         int t[n+1][sum+1];
+         int mod = 1e9+7; 
+        
+        //  // 1 0 0 0 
+        // //  1
+        // //  1
+        // //  1
+        //  for(int i=0; i<=n; i++){
+        //      for(int j=0; j<=sum; j++){
+        //          if(i==0 ) t[i][j]=0;
+        //          if(j==0 ) t[i][j]=1;
+        //      }
+        //  }
+         
+        //initialisation when
+        // elements in array are 0 as well
+        int ckt=1;
+        for(int j=0; j<=sum; j++){
+            t[0][j]=0;
+        }
+        t[0][0]=1;
+        for(int i=0; i<n; i++){
+            if(arr[i]==0){
+                ckt*=2;
+                //every zero increases number of subsets by factor of 2
+                // eg:4 0's : {},{1st 0}, {2nd 0}, {0,0}
+                t[i+1][0]=ckt;
+            }
+            else{
+                //copy same as current
+                t[i+1][0]=t[i][0];
+            }
+        }
+        
+         for(int i=1; i<=n; i++){
+             for(int j=1; j<=sum; j++){
+                 if( arr[i-1]<=j ){
+                     //pick or not pick
+                     t[i][j] = (t[i-1][j-arr[i-1]] + t[i-1][j] )%mod ; // add all number of subsets got from picking and not picking that element
+                 }
+                 else{
+                     t[i][j]=t[i-1][j];
+                 }
+             }
+         }
+         return t[n][sum];
+	}
