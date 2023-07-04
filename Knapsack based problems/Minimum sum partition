@@ -1,0 +1,42 @@
+https://practice.geeksforgeeks.org/problems/minimum-sum-partition3317/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+
+int minDifference(int arr[], int n)  { 
+	     
+	     int range=0;
+	     for(int i=0; i<n; i++)range+=arr[i];
+	     
+	     // making subset sum matrix
+	     bool t[n+1][range+1];
+	     
+	      //initialisation
+	     for(int i=0; i<=n; i++){
+	         for(int j=0; j<=range; j++){
+	             if(i==0) t[i][j]=false;
+	             if(j==0) t[i][j]=true;
+	         }
+	     }
+	     for(int i=1; i<=n ; i++){
+	         for(int j=1; j<=range; j++){
+	             if(arr[i-1]<=j){
+	                 t[i][j]= t[i-1][j-arr[i-1]] || t[i-1][j];
+	             }
+	             else{
+	                 t[i][j]=t[i-1][j];
+	             }
+	         }
+	     }
+	     //made the subset sum matrix
+	     //now last row (half) in vector
+	     vector<bool>v;
+	     for(int j=0; j<=range/2; j++){
+	         v.push_back(t[n][j]);
+	     }
+	     
+	     //getting min of range-2*s1
+	     int mini = INT_MAX;
+	     for(int i=0; i<v.size(); i++){
+	       //  cout<<v[i]<<" ";
+	         if(v[i]==true)mini= min(mini, range-2*i);
+	     } 
+	     return mini; 
+	} 
