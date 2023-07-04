@@ -1,0 +1,27 @@
+https://www.codingninjas.com/studio/problems/unbounded-knapsack_1215029?leftPanelTab=0
+
+int unboundedKnapsack(int n, int w, vector<int> &val, vector<int> &arr)
+{
+    //including ----> call i again
+    //not including --->call i-1
+    int t[n+1][w+1];
+    for(int i=0;i<=n;i++){
+        for(int j=0; j<=w; j++){
+           if(i==0 || j==0) t[i][j]=0;
+        }
+    }
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=w; j++){
+            if(arr[i-1]<=j){
+               int include = val[i-1] + t[i][j-arr[i-1]];
+               int dont    = t[i-1][j];
+               t[i][j] = max(include,dont);
+            }
+            else{
+                //not including -> call for i-1
+                 t[i][j]=t[i-1][j];
+            }
+        }
+    }
+    return t[n][w];
+}
