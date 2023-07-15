@@ -1,0 +1,58 @@
+https://practice.geeksforgeeks.org/problems/boolean-parenthesization5610/1
+
+class Solution{
+public:
+    map<string,int>mp;
+     int mod = 1003;
+    int solve(string &s,int i, int j, bool istrue){
+        
+        //base condn
+        if(i>j)return 0; //empty string
+        if(i==j){//single element
+            if(istrue==true){
+                return s[i]=='T';
+            }
+            else{
+                return s[i]=='F';
+            }
+        }
+
+        // dp using map
+        string temp = to_string(i) +" "+ to_string(j) + " "+to_string(istrue);
+        if(mp.find(temp)!=mp.end())return mp[temp];
+        
+        int ans=0;
+        
+        for(int k=i+1; k<=j-1; k=k+2){
+            int lt = solve(s,i,k-1,true);
+            int rt = solve(s,k+1,j,true);
+            int lf = solve(s,i,k-1,false);
+            int rf = solve(s,k+1,j,false);
+            
+             if(s[k] == '&')
+            {
+                if(istrue == 1) ans = ans + (lt* rt)%mod;
+                else ans = ans + (lt*rf)%mod + (lf*rt)%mod + (lf*rf)%mod;
+            }
+            else if(s[k] == '^')
+            {
+                if(istrue == 1) ans = ans +  (lt*rf)%mod + (lf*rt)%mod;
+                else ans = ans +  (lt*rt)%mod + (lf*rf)%mod;
+                
+            }
+            else if(s[k] == '|')
+            {
+                if(istrue == 1) ans = ans +  (lt*rt)%mod + (lt*rf)%mod + (lf*rt)%mod;
+                else ans = ans + (lf*rf)%mod;
+            }
+
+        }
+        mp[temp]=ans%mod;
+        return mp[temp];
+    }
+    int countWays(int n, string s){
+       mp.clear();
+       int ans=solve(s,0,n-1,true);
+       return ans;
+    }
+};
